@@ -1,28 +1,34 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import NewDiv from './NewDiv';
+import mapboxgl from 'mapbox-gl'
+mapboxgl.accessToken = 'pk.eyJ1IjoibWptY2Nvcm1hY2siLCJhIjoiY2s5ZGZmN2U4MDM3aDNnczY5OWFwNW5ybSJ9.0gJdZQtrfbH3M2IuGjY0qg';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <NewDiv />
-    </div>
-  );
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            lng: 5,
+            lat: 34,
+            zoom: 2
+        };
+    }
+
+    componentDidMount() {
+        const map = new mapboxgl.Map({
+            container: this.mapContainer,
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [this.state.lng, this.state.lat],
+            zoom: this.state.zoom
+        });
+    }
+
+    render() {
+        return (
+            <div>
+                <div ref={el => this.mapContainer = el} className="mapContainer" />
+            </div>
+        );
+    }
 }
 
 export default App;
