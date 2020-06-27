@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import mapboxgl from 'mapbox-gl'
 import MapboxGeocoder from 'mapbox-gl-geocoder'
+import IsochroneMenu from './IsochroneMenu';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibWptY2Nvcm1hY2siLCJhIjoiY2s5ZGZmN2U4MDM3aDNnczY5OWFwNW5ybSJ9.0gJdZQtrfbH3M2IuGjY0qg';
 
@@ -95,6 +96,7 @@ class App extends React.Component {
                 <div className='sidebarStyle'>
                     <div>Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom: {this.state.zoom}</div>
                 </div>
+                <IsochroneMenu/>
                 <div ref={el => this.mapContainer = el} className="mapContainer"/>
             </div>
         );

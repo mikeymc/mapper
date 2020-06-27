@@ -1,0 +1,10 @@
+.isochrone-menu {
+  position: absolute;
+  top: 50px;
+  bottom: 700px;
+  margin: 12px;
+  background-color: #404040;
+  color: #ffffff;
+  z-index: 1 !important;
+  font-size: small;
+}
