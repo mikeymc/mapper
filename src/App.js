@@ -3,6 +3,7 @@ import './App.css';
 import MapboxGeocoder from 'mapbox-gl-geocoder'
 import mapboxgl from "mapbox-gl";
 import $ from "jquery";
+import IsochroneMenu from "./IsochroneMenu";
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibWptY2Nvcm1hY2siLCJhIjoiY2s5ZGZmN2U4MDM3aDNnczY5OWFwNW5ybSJ9.0gJdZQtrfbH3M2IuGjY0qg';
 
@@ -145,42 +146,9 @@ class App extends React.Component {
         return (
             <div>
                 <div className='sidebarStyle'>
-                    <div>Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom: {this.state.zoom}</div>
+                    <div>Lon: {this.state.lng} | Lat: {this.state.lat}</div>
                 </div>
-                <div className='isochrone-menu'>
-                    <form id='params'>
-                        <h4>Chose a travel mode:</h4>
-                        <div>
-                            <label>
-                                <input name='profile' type='radio' value='walking'/>
-                                <div>Walking</div>
-                            </label>
-                            <label>
-                                <input name='profile' type='radio' value='cycling'/>
-                                <div>Cycling</div>
-                            </label>
-                            <label>
-                                <input name='profile' type='radio' value='driving'/>
-                                <div>Driving</div>
-                            </label>
-                        </div>
-                        <h4>Chose a maximum duration:</h4>
-                        <div>
-                            <label>
-                                <input name='duration' type='radio' value='10'/>
-                                <div>10 min</div>
-                            </label>
-                            <label>
-                                <input name='duration' type='radio' value='20'/>
-                                <div>20 min</div>
-                            </label>
-                            <label>
-                                <input name='duration' type='radio' value='30'/>
-                                <div>30 min</div>
-                            </label>
-                        </div>
-                    </form>
-                </div>
+                <IsochroneMenu />
                 <div ref={el => this.mapContainer = el} className="mapContainer"/>
             </div>
         );

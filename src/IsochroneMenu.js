@@ -4,31 +4,17 @@ import mapboxgl from "mapbox-gl";
 import $ from "jquery";
 
 function IsochroneMenu() {
-    const urlBase = 'https://api.mapbox.com/isochrone/v1/mapbox/';
-    const lon = -77.034;
-    const lat = 38.899;
-    const profile = 'cycling';
-    const minutes = 10;
-    let query = urlBase + profile + '/' + lon + ',' + lat + '?contours_minutes=' + minutes + '&polygons=true&access_token=' + mapboxgl.accessToken;
-
-    $.ajax({
-        method: 'GET',
-        url: query
-    }).done(function (data) {
-        console.log(data);
-    });
-
     return (
         <div className='isochrone-menu'>
             <form id='params'>
-                <h4>Chose a travel mode:</h4>
+                <h4>Travel mode</h4>
                 <div>
                     <label>
                         <input name='profile' type='radio' value='walking'/>
                         <div>Walking</div>
                     </label>
                     <label>
-                        <input name='profile' type='radio' value='cycling' checked/>
+                        <input name='profile' type='radio' value='cycling'/>
                         <div>Cycling</div>
                     </label>
                     <label>
@@ -36,10 +22,10 @@ function IsochroneMenu() {
                         <div>Driving</div>
                     </label>
                 </div>
-                <h4>Chose a maximum duration:</h4>
+                <h4>Duration</h4>
                 <div>
                     <label>
-                        <input name='duration' type='radio' value='10' checked/>
+                        <input name='duration' type='radio' value='10'/>
                         <div>10 min</div>
                     </label>
                     <label>
