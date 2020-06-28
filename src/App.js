@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
-import mapboxgl from 'mapbox-gl'
 import MapboxGeocoder from 'mapbox-gl-geocoder'
-import IsochroneMenu from './IsochroneMenu';
+import mapboxgl from "mapbox-gl";
+import $ from "jquery";
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibWptY2Nvcm1hY2siLCJhIjoiY2s5ZGZmN2U4MDM3aDNnczY5OWFwNW5ybSJ9.0gJdZQtrfbH3M2IuGjY0qg';
 
@@ -12,7 +12,9 @@ class App extends React.Component {
         this.state = {
             lng: -77.0253,
             lat: 38.9772,
-            zoom: 12
+            zoom: 12,
+            isoProfile: 'walking',
+            isoDuration: 10
         };
     }
 
@@ -23,6 +25,24 @@ class App extends React.Component {
             center: [this.state.lng, this.state.lat],
             zoom: this.state.zoom
         });
+
+        let getIso = (map) => {
+            const urlBase = 'https://api.mapbox.com/isochrone/v1/mapbox/';
+            let lon = this.state.lng;
+            let lat = this.state.lat;
+            let profile = this.state.isoProfile;
+            let minutes = this.state.isoDuration;
+            console.log('duration', this.state.isoDuration);
+            console.log('profile', this.state.isoProfile);
+            let query = urlBase + profile + '/' + lon + ',' + lat + '?contours_minutes=' + minutes + '&polygons=true&access_token=' + mapboxgl.accessToken;
+
+            $.ajax({
+                method: 'GET',
+                url: query
+            }).done(function (data) {
+                map.getSource('iso').setData(data);
+            });
+        };
 
         map.addControl(
             new MapboxGeocoder({
@@ -39,7 +59,7 @@ class App extends React.Component {
             });
         });
 
-        map.on('load', function () {
+        map.on('load', () => {
             map.addSource('points', {
                 'type': 'geojson',
                 'data': {
@@ -87,7 +107,38 @@ class App extends React.Component {
                     'text-anchor': 'top'
                 }
             });
+            map.addSource('iso', {
+                type: 'geojson',
+                data: {
+                    'type': 'FeatureCollection',
+                    'features': []
+                }
+            });
+            map.addLayer({
+                'id': 'isoLayer',
+                'type': 'fill',
+                // Use "iso" as the data source for this layer
+                'source': 'iso',
+                'layout': {},
+                'paint': {
+                    // The fill color for the layer is set to a light purple
+                    'fill-color': '#5a3fc0',
+                    'fill-opacity': 0.3
+                }
+            }, "poi-label");
+
+            let params = document.getElementById('params');
+            params.addEventListener('change', (e) => {
+                if (e.target.name === 'profile') {
+                    this.setState({isoProfile: e.target.value});
+                    getIso(map);
+                } else if (e.target.name === 'duration') {
+                    this.setState({isoDuration: e.target.value});
+                    getIso(map);
+                }
+            });
         });
+
     }
 
     render() {
@@ -96,7 +147,40 @@ class App extends React.Component {
                 <div className='sidebarStyle'>
                     <div>Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom: {this.state.zoom}</div>
                 </div>
-                <IsochroneMenu/>
+                <div className='isochrone-menu'>
+                    <form id='params'>
+                        <h4>Chose a travel mode:</h4>
+                        <div>
+                            <label>
+                                <input name='profile' type='radio' value='walking'/>
+                                <div>Walking</div>
+                            </label>
+                            <label>
+                                <input name='profile' type='radio' value='cycling'/>
+                                <div>Cycling</div>
+                            </label>
+                            <label>
+                                <input name='profile' type='radio' value='driving'/>
+                                <div>Driving</div>
+                            </label>
+                        </div>
+                        <h4>Chose a maximum duration:</h4>
+                        <div>
+                            <label>
+                                <input name='duration' type='radio' value='10'/>
+                                <div>10 min</div>
+                            </label>
+                            <label>
+                                <input name='duration' type='radio' value='20'/>
+                                <div>20 min</div>
+                            </label>
+                            <label>
+                                <input name='duration' type='radio' value='30'/>
+                                <div>30 min</div>
+                            </label>
+                        </div>
+                    </form>
+                </div>
                 <div ref={el => this.mapContainer = el} className="mapContainer"/>
             </div>
         );
