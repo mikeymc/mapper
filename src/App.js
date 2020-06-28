@@ -4,6 +4,7 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import mapboxgl from "mapbox-gl";
 import $ from "jquery";
 import SidebarMenu from "./SidebarMenu";
+import * as wholeFoodsLocations from './wholeFoods.geojson'
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibWptY2Nvcm1hY2siLCJhIjoiY2s5ZGZmN2U4MDM3aDNnczY5OWFwNW5ybSJ9.0gJdZQtrfbH3M2IuGjY0qg';
 
@@ -64,56 +65,20 @@ class App extends React.Component {
         });
 
         map.on('load', () => {
-            map.addSource('ports', {
+            map.addSource('whole-foods-locations', {
                 type: 'geojson',
-                data: 'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_ports.geojson'
+                data: wholeFoodsLocations
             });
 
             map.addLayer({
-                'id': 'port-locations',
+                'id': 'whole-foods-locations-points',
                 'type': 'circle',
-                'source': 'ports',
+                'source': 'whole-foods-locations',
                 'paint': {
                     'circle-radius': 6,
-                    'circle-color': '#B42222'
+                    'circle-color': 'black'
                 },
                 'filter': ['==', '$type', 'Point']
-            });
-
-            map.addSource('points', {
-                'type': 'geojson',
-                'data': {
-                    'type': 'FeatureCollection',
-                    'features': [
-                        {
-                            // feature for Mapbox DC
-                            'type': 'Feature',
-                            'geometry': {
-                                'type': 'Point',
-                                'coordinates': [
-                                    -77.03238901390978,
-                                    38.913188059745586
-                                ]
-                            },
-                            'properties': {
-                                'title': 'Mapbox DC',
-                                'icon': 'monument'
-                            }
-                        },
-                        {
-                            // feature for Mapbox SF
-                            'type': 'Feature',
-                            'geometry': {
-                                'type': 'Point',
-                                'coordinates': [-122.414, 37.776]
-                            },
-                            'properties': {
-                                'title': 'Mapbox SF',
-                                'icon': 'harbor'
-                            }
-                        }
-                    ]
-                }
             });
 
             map.addLayer({
