@@ -3,7 +3,7 @@ import './App.css';
 import MapboxGeocoder from 'mapbox-gl-geocoder'
 import mapboxgl from "mapbox-gl";
 import $ from "jquery";
-import IsochroneMenu from "./IsochroneMenu";
+import SidebarMenu from "./SidebarMenu";
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibWptY2Nvcm1hY2siLCJhIjoiY2s5ZGZmN2U4MDM3aDNnczY5OWFwNW5ybSJ9.0gJdZQtrfbH3M2IuGjY0qg';
 
@@ -145,10 +145,7 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <div className='sidebarStyle'>
-                    <div>Lon: {this.state.lng} | Lat: {this.state.lat}</div>
-                </div>
-                <IsochroneMenu />
+                <SidebarMenu lat={this.state.lat} lng={this.state.lng}/>
                 <div ref={el => this.mapContainer = el} className="mapContainer"/>
             </div>
         );
