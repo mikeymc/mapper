@@ -64,6 +64,22 @@ class App extends React.Component {
         });
 
         map.on('load', () => {
+            map.addSource('ports', {
+                type: 'geojson',
+                data: 'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_ports.geojson'
+            });
+
+            map.addLayer({
+                'id': 'port-locations',
+                'type': 'circle',
+                'source': 'ports',
+                'paint': {
+                    'circle-radius': 6,
+                    'circle-color': '#B42222'
+                },
+                'filter': ['==', '$type', 'Point']
+            });
+
             map.addSource('points', {
                 'type': 'geojson',
                 'data': {
@@ -99,6 +115,7 @@ class App extends React.Component {
                     ]
                 }
             });
+
             map.addLayer({
                 'id': 'points',
                 'type': 'symbol',
