@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import MapboxGeocoder from 'mapbox-gl-geocoder'
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import mapboxgl from "mapbox-gl";
 import $ from "jquery";
 import SidebarMenu from "./SidebarMenu";
@@ -48,7 +48,10 @@ class App extends React.Component {
         map.addControl(
             new MapboxGeocoder({
                 accessToken: mapboxgl.accessToken,
-                mapboxgl: mapboxgl
+                mapboxgl: mapboxgl,
+                marker: {
+                    color: 'orange'
+                }
             })
         );
 
