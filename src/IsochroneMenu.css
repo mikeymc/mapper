@@ -1,17 +1,8 @@
 .isochrone-menu {
   position: relative;
-  top: 50px;
-  width: 275px;
-  margin-left: 12px;
-  font-family: Helvetica;
-  background-color: #404040;
-  color: #ffffff;
-  z-index: 1 !important;
-  font-size: small;
+  top: 10px;
 }
 
 label {
-  position: relative;
-  width: 50px;
-  margin-left: 25px;
+  width: 75px;
 }

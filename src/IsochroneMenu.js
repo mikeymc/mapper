@@ -6,7 +6,7 @@ class IsochroneMenu extends Component {
         return (
             <div className='isochrone-menu'>
                 <form id='params'>
-                    <h4>Travel mode</h4>
+                    <h5>Travel mode</h5>
                     <div>
                         <label>
                             <input name='profile' type='radio' value='walking'/>
@@ -21,7 +21,7 @@ class IsochroneMenu extends Component {
                             <div>Driving</div>
                         </label>
                     </div>
-                    <h4>Duration</h4>
+                    <h5>Duration</h5>
                     <div>
                         <label>
                             <input name='duration' type='radio' value='10'/>
