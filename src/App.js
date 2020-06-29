@@ -30,12 +30,10 @@ class App extends React.Component {
 
         let getIso = (map) => {
             const urlBase = 'https://api.mapbox.com/isochrone/v1/mapbox/';
-            let lon = this.state.lng;
-            let lat = this.state.lat;
+            let lon = this.state.isoLng;
+            let lat = this.state.isoLat;
             let profile = this.state.isoProfile;
             let minutes = this.state.isoDuration;
-            console.log('duration', this.state.isoDuration);
-            console.log('profile', this.state.isoProfile);
             let query = urlBase + profile + '/' + lon + ',' + lat + '?contours_minutes=' + minutes + '&polygons=true&access_token=' + mapboxgl.accessToken;
 
             $.ajax({
@@ -46,15 +44,23 @@ class App extends React.Component {
             });
         };
 
+        let mapboxGeocoderControl = new MapboxGeocoder({
+            accessToken: mapboxgl.accessToken,
+            mapboxgl: mapboxgl,
+            marker: {
+                color: 'orange'
+            }
+        });
         map.addControl(
-            new MapboxGeocoder({
-                accessToken: mapboxgl.accessToken,
-                mapboxgl: mapboxgl,
-                marker: {
-                    color: 'orange'
-                }
-            })
+            mapboxGeocoderControl
         );
+
+        mapboxGeocoderControl.on('result', (data) => {
+            this.setState({
+                isoLng: data.result.geometry.coordinates[0],
+                isoLat: data.result.geometry.coordinates[1]
+            });
+        });
 
         map.on('move', () => {
             this.setState({
