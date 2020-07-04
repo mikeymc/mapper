@@ -10,30 +10,38 @@ class IsochroneMenu extends Component {
                     <div>
                         <label>
                             <input name='profile' type='radio' value='walking'/>
-                            <div>Walking</div>
+                            <div>Walk</div>
                         </label>
                         <label>
                             <input name='profile' type='radio' value='cycling'/>
-                            <div>Cycling</div>
+                            <div>Bike</div>
                         </label>
                         <label>
                             <input name='profile' type='radio' value='driving'/>
-                            <div>Driving</div>
+                            <div>Car</div>
                         </label>
                     </div>
-                    <h5>Duration</h5>
+                    <h5>Duration (min)</h5>
                     <div>
                         <label>
                             <input name='duration' type='radio' value='10'/>
-                            <div>10 min</div>
+                            <div>10</div>
                         </label>
                         <label>
                             <input name='duration' type='radio' value='20'/>
-                            <div>20 min</div>
+                            <div>20</div>
                         </label>
                         <label>
                             <input name='duration' type='radio' value='30'/>
-                            <div>30 min</div>
+                            <div>30</div>
+                        </label>
+                        <label>
+                            <input name='duration' type='radio' value='45'/>
+                            <div>45</div>
+                        </label>
+                        <label>
+                            <input name='duration' type='radio' value='60'/>
+                            <div>60</div>
                         </label>
                     </div>
                 </form>
