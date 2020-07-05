@@ -101,6 +101,7 @@ class App extends React.Component {
                     'text-anchor': 'top'
                 }
             });
+
             map.addSource('iso', {
                 type: 'geojson',
                 data: {
@@ -108,6 +109,7 @@ class App extends React.Component {
                     'features': []
                 }
             });
+
             map.addLayer({
                 'id': 'isoLayer',
                 'type': 'fill',
@@ -119,6 +121,41 @@ class App extends React.Component {
                     'fill-opacity': 0.3
                 }
             }, "poi-label");
+
+            map.addSource('points', {
+                'type': 'geojson',
+                'data': {
+                    'type': 'FeatureCollection',
+                    'features': [
+                        {
+                            'type': 'Feature',
+                            'geometry': {
+                                'type': 'Point',
+                                'coordinates': [
+                                    -122.306,
+                                    47.4462
+                                ]
+                            },
+                            'properties': {
+                                'icon': 'airport'
+                            }
+                        }
+                    ]
+                }
+            });
+
+            map.addLayer({
+                'id': 'points',
+                'type': 'symbol',
+                'source': 'points',
+                'layout': {
+                    'icon-image': ['concat', ['get', 'icon'], '-15'],
+                    'text-field': ['get', 'title'],
+                    'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+                    'text-offset': [0, 0.6],
+                    'text-anchor': 'top'
+                }
+            });
 
             let params = document.getElementById('params');
             params.addEventListener('change', (e) => {
