@@ -12,11 +12,13 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            lng: -77.0253,
-            lat: 38.9772,
-            zoom: 12,
-            isoProfile: 'walking',
-            isoDuration: 10
+            lng: -122.3060, // -77.0253,
+            lat: 47.4462, //38.9772,
+            zoom: 8.25,
+            isoProfile: 'driving',
+            isoLat: 47.4462,
+            isoLng: -122.3060,
+            isoDuration: [60]
         };
     }
 
@@ -113,8 +115,7 @@ class App extends React.Component {
                 'source': 'iso',
                 'layout': {},
                 'paint': {
-                    // The fill color for the layer is set to a light purple
-                    'fill-color': '#5a3fc0',
+                    'fill-color': '#00612a',
                     'fill-opacity': 0.3
                 }
             }, "poi-label");
@@ -129,6 +130,8 @@ class App extends React.Component {
                     getIso(map);
                 }
             });
+
+            getIso(map);
         });
 
     }
